@@ -9,8 +9,18 @@
     - name
 */
 var Ironmon = function(name) {
-
+  
+  this.health = healthOfIronmon;
+  this.power = powerOfIronmon;
+  this.name = nameOfIronmon;
 }
+
+nameOfIronmon = ""
+
+healthOfIronmon = 25
+
+powerOfIronmon = 1
+
 
 /*
   This function determines a random *integer* between 1 and 5.
