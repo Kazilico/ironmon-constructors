@@ -11,7 +11,11 @@
   You'll need to create Ironmon instances in this constructor.
 */
 var Game = function(leftName, rightName) {
+	
+	this.left = new Ironmon(leftName)
+	this.right = new Ironmon(rightName)
 
+	this.turn = true
 }
 
 /*
@@ -19,5 +23,5 @@ var Game = function(leftName, rightName) {
   Otherwise, it becomes true.
 */
 Game.prototype.takeTurn = function() {
-
+	this.turn = !this.turn
 }

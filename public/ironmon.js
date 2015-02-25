@@ -8,19 +8,25 @@
   It also contains a property passed in as a parameter:
     - name
 */
-var Ironmon = function(name) {
+var Ironmon = function(name, type) {
   
-  this.health = healthOfIronmon;
-  this.power = powerOfIronmon;
-  this.name = nameOfIronmon;
+  this.health = 25;
+  this.power = 1;
+  this.name = name;
+  this.type = type;
 }
 
-nameOfIronmon = ""
+Ironmon.prototype.isFire = function() {
+  return (this.type === "fire")
+}
 
-healthOfIronmon = 25
+Ironmon.prototype.isWater = function() {
+  return (this.type === "water")
+}
 
-powerOfIronmon = 1
-
+Ironmon.prototype.isGrass = function() {
+  return (this.type === "grass")
+}
 
 /*
   This function determines a random *integer* between 1 and 5.
@@ -31,14 +37,20 @@ powerOfIronmon = 1
     make the Ironmon's health go above 25, it becomes 25 instead.
 */
 Ironmon.prototype.heal = function() {
+  var heal = Math.ceil(Math.random() *5)
 
+  this.health = heal + this.health
+
+  if (this.health > 25){
+    this.health = 25
+  } 
 }
 
 /*
   This function adds one to the power of the Ironmon.
 */
 Ironmon.prototype.train = function() {
-
+  this.power = (this.power + 1)
 }
 
 /*
@@ -48,6 +60,10 @@ Ironmon.prototype.train = function() {
 */
 Ironmon.prototype.active = function() {
 
+  if (this.health >= 1){
+    return true
+  }
+  return false
 }
 
 /*
@@ -59,5 +75,28 @@ Ironmon.prototype.active = function() {
   This function returns the amount of damage dealt.
 */
 Ironmon.prototype.attack = function(opponent) {
-  
+
+  var attack = Math.ceil(Math.random() * this.power) 
+
+  if (this.isFire() && opponent.isGrass()) {
+
+    attack = attack * 2
+ 
+  } 
+ 
+  if (this.isGrass() && opponent.isWater()) {
+
+    attack = attack * 2
+ 
+  }
+
+  if (this.isWater() && opponent.isFire()) {
+
+    attack = attack * 2
+ 
+  }
+ 
+  opponent.health = opponent.health - attack
+    
+  return attack
 }
